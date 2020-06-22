@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2 capitulo 12</title>
+</head>
+
+<body>
+    <div id="output">Complete Couser Javascript</div>
+    <input type="file" multiple onchange="upFiles(this.files)">
+    <div id="message"></div>
+    <script>
+        let message = document.getElementById('message');
+
+        if (window.FileReader) {
+            message.innerHTML = "File reader is Available";
+        } else {
+            message.innerHTML = "File reader is Not Available";
+        }
+
+        function upFiles(files) {
+            for (let x = 0; x < files.length; x++) {
+                let fReader = new FileReader();
+                let filesNames = files[x].name;
+                fReader.onload = function (e) {
+                    message.innerHTML += '<br>' + filesNames;
+                    message.innerHTML += '<br>' + e.target.result;
+                }
+                fReader.readAsText(files[x]);
+
+            }
+
+        }
+    </script>
+
+</body>
+
+</html>

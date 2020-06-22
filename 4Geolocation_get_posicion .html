@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>4 capitulo 12</title>
+</head>
+<style>
+    #map {
+        height: 100%;
+    }
+</style>
+
+<body>
+    <div id="output">Complete Couser Javascript</div>
+    <div id="map"></div>
+    <script src="https://maps.googleapis.com/maps/apis?key="> </script>
+
+    <script>
+        window.onload = init;
+        /* AIzaSyD1OBKldkqjnDDgsjjyanYIGmALQSCtnzQ*/
+        let output = document.getElementById('output');
+        let m = document.getElementById('map');
+
+
+
+        function init() {
+            navigator.geolocation.getCurrentPosition(placeMap);
+
+        }
+
+        function placeMap(data) {
+            let options = {
+                center: {
+                    lat: data.coords.latitude,
+                    lng: data.coords.longitude,
+                },
+                zoom: 5
+            }
+            let map = new google.maps.Map(m, options);
+            console.dir(data);
+
+        }
+    </script>
+
+</body>
+
+</html>
