@@ -8,6 +8,7 @@
 </head>
 
 <body>
+    <div id="output"></div>
     <script>
         let message = "hello word";
         let myObj = {
@@ -19,11 +20,12 @@
 
         if (localStorage.getItem('mes')) {
             let myObj2 = JSON.parse(localStorage.getItem('mes'));
-            document.getElementById('output').innerHTML = myObj2.message + '<br>' + myObj2.secret;
+            document.getElementById('output').innerHTML = myObj2.message + '<br>' + myObj2.count + '<br>' + myObj2
+                .secret;
             myObj2.count = Number(myObj2.count) + 1;
             myObj = {
                 "message": "UPDATED VALUES",
-                "count": myObj2,
+                "count": myObj2.count,
                 "secret": "Javascript2"
             }
             myString = JSON.stringify(myObj);
