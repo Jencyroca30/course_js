@@ -4,11 +4,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>10 capi 12</title>
 </head>
 
 <body>
+    <script>
+        let message = "hello word";
+        let myObj = {
+            "message": "Hello Wordl",
+            "count": 1,
+            "secret": "Javascript"
+        };
+        let myString = JSON.stringify(myObj);
 
+        if (localStorage.getItem('mes')) {
+            let myObj2 = JSON.parse(localStorage.getItem('mes'));
+            document.getElementById('output').innerHTML = myObj2.message + '<br>' + myObj2.secret;
+            myObj2.count = Number(myObj2.count) + 1;
+            myObj = {
+                "message": "UPDATED VALUES",
+                "count": myObj2,
+                "secret": "Javascript2"
+            }
+            myString = JSON.stringify(myObj);
+        }
+        localStorage.setItem('mes', myString);
+    </script>
 </body>
 
 </html>
