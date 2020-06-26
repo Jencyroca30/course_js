@@ -4,60 +4,216 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>12 capit 12 </title>
+    <style>
+        .item {
+            border: 1px solid blue;
+            padding: 2%;
+            width: 29%;
+            height: 300px;
+            display: inline-block;
+        }
+
+        .img-fluid {
+            max-width: 100%;
+        }
+
+        .produtitem,
+        .btn {
+            border: 1px solid black;
+            text-decoration: none;
+            background-color: rgb(118, 192, 45);
+            color: azure;
+            border-radius: 15px;
+            padding: 5px;
+            font-size: 0.6em;
+            display: inline-block;
+
+        }
+
+
+        .remove {
+            background-color: tomato;
+        }
+
+        .btnclear {
+            border: 1px solid black;
+            text-decoration: none;
+            background-color: rgb(45, 192, 192);
+            color: azure;
+            border-radius: 15px;
+            padding: 5px;
+            font-size: 0.6em;
+            display: inline-block;
+
+        }
+
+        td {
+            text-align: center;
+            border: 1px solid rgb(0, 128, 28);
+            padding: 5px;
+
+        }
+
+        th {
+            border: 2px solid rgb(0, 128, 28);
+            text-align: center;
+            font-size: 1.5em;
+            text-decoration-color: tomato;
+        }
+    </style>
+
 </head>
 
 <body>
-    <div id="output">Complete Course Javascript</div>
+    <div id="output">Comprar.com</div>
+    <div id="output2">Carrito de Compras</div>
+    <input type="button" value="Cleariiii" onclick="clear()">
+
+
     <script>
         let items = [{
-                id: '01',
+                idint: '01',
                 name: 'iphone',
                 details: 'White',
-                cost: 500
+                cost: 50000
             },
 
             {
-                id: '02',
+                idint: '02',
                 name: 'Samsung',
                 details: 'Blue',
-                cost: 300
+                cost: 30000
             },
             {
-                id: '03',
+                idint: '03',
                 name: 'iPad',
                 details: 'Black',
-                cost: 800,
+                cost: 80000
             },
             {
-                id: '04',
+                idint: '04',
                 name: 'Camera',
                 details: '25MP',
-                cost: 300,
+                cost: 30000
             },
             {
-                id: '05',
+                idint: '05',
                 name: 'Laptod',
                 details: 'intel i7',
-                cost: 1200,
+                cost: 120000
             },
             {
-                id: '06',
+                idint: '06',
                 name: 'LCD Monitor',
                 details: '24 inch',
-                cost: 200
+                cost: 20000
             },
             {
-                id: '07',
+                idint: '07',
                 name: 'TV',
                 details: '50 inch',
-                cost: 450,
+                cost: 45000
             },
         ];
-        items.forEach(function (v) {
-            console.log(v);
+        let html = '<br>';
+        let shopcart = []; //arreglo para agregar al carrito
+        let clarall = false;
+        window.onload = init;
 
-        })
+        //build itmes product
+        function init() {
+            buildItems();
+            let q = document.querySelectorAll('.produtitem');
+            for (let x = 0; x < q.length; x++) {
+                q[x].addEventListener('click', function (e) {
+                    e.preventDefault();
+                    addTocart();
+                    clarall = false;
+
+                })
+                outputCart();
+
+            }
+
+        }
+
+        function addTocart() {
+            let iteminfo = event.target.dataset;
+            let itemincart = false;
+            iteminfo.qty = 1;
+            console.log(iteminfo);
+            shopcart.forEach(function (v) {
+                console.log(v.idm, '===', iteminfo.idm);
+                if (v.idm === iteminfo.idm) {
+                    v.qty = parseInt(v.qty) + parseInt(iteminfo.qty);
+                    itemincart = true;
+                }
+            })
+            if (!itemincart) {
+                shopcart.push(iteminfo);
+            }
+
+            localStorage.setItem('scart', JSON.stringify(shopcart));
+            outputCart();
+        }
+
+        function outputCart() {
+            if (localStorage.getItem('scart') != null) {
+                shopcart = JSON.parse(localStorage.getItem('scart'));
+
+            }
+            let html =
+                '<div><table><tr><th>item</th><th>Quantity</th><th>Id<th>Interno</th><th>Costo</th><th>Sub Total</th><th>Opcions</th></div>';
+            let total = 0;
+            shopcart.forEach(function (v) {
+                let stotal = v.qty * v.priece;
+                total += stotal;
+                html += '<tr><td>' + v.name + '(' + v.s + ')</td><td>' + v.qty +
+                    '</td><td>' + v.idm + '</td><td>' + v.interno + '</td><td> ' + fMoney(v.priece) + '<td>' +
+                    fMoney(stotal) + '</td><td><span class= "remove btn" onclick="remove(' + v.idm +
+                    ')">x</sp></td></tr>';
+
+            });
+            html += '<tr><td colspan=7>Total' + fMoney(total) + '</td></tr></table>';
+            document.getElementById('output2').innerHTML = html;
+        }
+
+        function buildItems() {
+            let x = 0;
+            items.forEach(function (v) {
+                html += '<div class="item"><h3>' + v.name +
+                    '</h3><img src=" https://via.placeholder.com/350x150" class="img-fluid"><div>' + v.details +
+                    '<a href="#"class="produtitem" data-name="' + v.name + '"data-s="' + v.details +
+                    '"data-priece="' + v.cost + '"data-idm="' + x + '"data-interno="' + v.idint +
+                    '">Add to Cart</a></div>' + fMoney(v.cost) + '</div>';
+                x++;
+                console.log(v);
+            })
+            document.getElementById('output').innerHTML = html;
+        }
+
+        function remove(idm) {
+            for (let x = 0; x < shopcart.length; x++) {
+                if (shopcart[x].idm = idm) {
+                    let rem = shopcart.splice(x, 1);
+                    console.log(rem);
+                }
+            }
+            localStorage.setItem('scart', JSON.stringify(shopcart));
+            outputCart();
+
+        }
+
+        function fMoney(n) {
+            return '$' + (n / 100).toFixed(2);
+
+        }
+
+        /*  function clear() {
+
+         }
+         clear(); */
     </script>
 
 </body>
