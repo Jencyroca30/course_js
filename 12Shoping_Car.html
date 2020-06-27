@@ -68,7 +68,7 @@
 <body>
     <div id="output">Comprar.com</div>
     <div id="output2">Carrito de Compras</div>
-    <input type="button" value="Cleariiii" onclick="clear()">
+    <input type="button" value="emtpy Cart" onclick="emptyCart()">
 
 
     <script>
@@ -117,8 +117,7 @@
             },
         ];
         let html = '<br>';
-        let shopcart = []; //arreglo para agregar al carrito
-        let clarall = false;
+        let shopcart = []; //arreglo para agregar al carrito de compras
         window.onload = init;
 
         //build itmes product
@@ -210,10 +209,12 @@
 
         }
 
-        /*  function clear() {
+        function emptyCart() {
+            shopcart = [];
+            localStorage.setItem('scart', JSON.stringify(shopcart));
+            outputCart();
 
-         }
-         clear(); */
+        }
     </script>
 
 </body>
