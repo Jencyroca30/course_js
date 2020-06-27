@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>25 cap 10 Document</title>
+    <style>
+        .gameboard {
+            width: 800px;
+            height: 700px;
+            margin: 0 auto;
+            border: 1px solid rebeccapurple;
+        }
+
+        .office {
+            float: left;
+            width: 150px;
+            height: 170px;
+            overflow: hidden;
+            position: relative;
+            border: 1px solid red;
+            margin: 10px 30px;
+        }
+
+        .desk {
+            width: 100%;
+            height: 50px;
+            bottom: 0px;
+            position: absolute;
+            background-color: burlywood;
+            z-index: 2;
+
+        }
+
+        .computer {
+            background:
+                url('comp1.png') bottom center no-repeat;
+            background-size: 100% 100%;
+            position: absolute;
+            top: 100%;
+            width: 100%;
+            height: 80%;
+            transition: all 0.5s;
+        }
+
+        .popup {
+            top: 0;
+        }
+    </style>
+
+</head>
+
+<body> score: <span class="score">0</span>
+    <input type="button" onclick="start()" value="Start Game">
+    <span id=ctimer></span>
+    <div class="gameboard"></div>
+    <script>
+        window.onload = build;
+        let computer;
+        let offices = 9;
+        let timer;
+        let sCom;
+        let score = 0;
+        let cOff = true;
+        let win;
+        let pause = false;
+
+
+        function build() {
+            html = "<h1> Hit the Computer</h1>"
+
+            for (let x = 0; x < offices; x++) {
+                html += '<div class="office"><div class="desk"></div><div class="computer"></div></div>'
+            }
+            document.querySelector('.gameboard').innerHTML = html;
+            computer = document.querySelectorAll('.computer');
+            for (let x = 0; x < computer.length; x++) {
+                computer[x].addEventListener('click', hitcomputer, false);
+            }
+        }
+
+        function popup() {
+            if (!pause) {
+                cOff = true;
+                sCom = computer[Math.floor(Math.random() * computer.length)];
+                sCom.classList.add('popup');
+                let rTime = (Math.floor(Math.random() * 10) * 100) + 200;
+                timer = setTimeout(hidecomputer, rTime);
+
+            }
+        }
+
+        function hidecomputer() {
+            sCom.classList.remove('popup');
+            popup();
+        }
+
+
+        function hitcomputer() {
+
+
+            event.target.classList.remove('popup');
+            if (cOff) {
+                cOff = false;
+                score++;
+                document.querySelector('.score').innerHTML = score;
+                if (score == 2) {
+                    win = "WON";
+                    document.querySelector('.score ').innerHTML = win;
+                    pause = true;
+                }
+            }
+            popup();
+        }
+
+        function ctimer() {
+            const timeSpan = document.getElementById('ctimer');
+
+            const mins = 0.1;
+            const now = new Date().getTime();
+            const deadline = mins * 60 * 1000 + now;
+
+
+            var refreshIntervalId = setInterval(() => {
+                var currentTime = new Date().getTime();
+                var distance = deadline - currentTime;
+                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                timeSpan.innerHTML = minutes + ':' + seconds;
+                if (seconds === 0) {
+                    pause = true;
+                    win = "You Loose";
+                    document.querySelector('.score ').innerHTML = win;
+                    clearInterval(refreshIntervalId);
+
+                }
+                if (win === "WON") {
+                    clearInterval(refreshIntervalId);
+
+                }
+            }, 500)
+
+
+
+        }
+
+        function start() {
+            score = 0;
+            win = "";
+            pause = false;
+            document.querySelector('.score ').innerHTML = win;
+            ctimer()
+            popup();
+        }
+    </script>
+</body>
+
+</html>

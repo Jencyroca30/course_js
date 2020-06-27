@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>25 capitu 12</title>
+    <style>
+        canvas {
+            border: 1px solid brown;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="output">Complete Course JavaScript</div>
+    <!-- <input type="text" id="myWord">
+    <input type="button" onclick="draw()" value="Draw"> -->
+
+    <br><br>
+    <canvas id="canvas1" onclick="imgData()"></canvas>
+    <canvas id="canvas2"></canvas>
+    <canvas id="canvas3"></canvas>
+    <img id="myImage" src="comp1.png">
+    <script>
+        let can = document.querySelectorAll('canvas');
+        for (let x = 0; x < can.length; x++) {
+            can[x].addEventListener('mouseover', function () {
+                document.getElementById('myImage').src = event.target.toDataURL();
+                console.log(myImage);
+            })
+        }
+
+
+        window.onload = function () {
+
+            let canvas1 = document.getElementById('canvas1');
+            let ctx1 = canvas1.getContext('2d');
+            ctx1.fillStyle = 'tomato';
+            ctx1.fillRect(5, 5, 150, 100);
+
+            let canvas2 = document.getElementById('canvas2');
+            let ctx2 = canvas2.getContext('2d');
+            ctx2.fillStyle = 'blue';
+            ctx2.arc(60, 60, 50, 0, 2 * Math.PI);
+            ctx2.stroke();
+            ctx2.fill();
+
+            let canvas3 = document.getElementById('canvas3');
+            let ctx3 = canvas3.getContext('2d');
+            ctx3.fillStyle = 'yellow';
+            ctx3.arc(60, 60, 50, 0, 2 * Math.PI);
+            ctx3.stroke();
+            ctx3.fill();
+            /*  let myImage = document.getElementById('myImage');
+             /* ctx3.drawImage(myImage, 10, 10);
+             ctx3.drawImage(canvas1, 10, 10);
+             ctx3.drawImage(canvas2, 10, 10); */
+        }
+    </script>
+</body>
+
+</html>
