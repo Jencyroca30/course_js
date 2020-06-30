@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>29 capitulo 12</title>
+    <style>
+        canvas {
+            border: 1px solid tomato;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="output">Complete Course Javascript</div>
+    <input type="file" id="imagenLoarder">
+    <br> <br>
+    <canvas id="canvas"></canvas>
+
+    <script>
+        let canvas = document.getElementById('canvas');
+        let ctx = canvas.getContext('2d');
+        let imagenLoarder = document.getElementById('imagenLoarder');
+        imagenLoarder.addEventListener('change', upImage, false)
+
+        function upImage() {
+
+            let r = new FileReader();
+            r.readAsDataURL(event.target.files[0]);
+
+            r.onload = function (e) {
+                let img = new Image();
+                img.src = event.target.result;
+
+                img.onload = function () {
+
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+
+                    ctx.drawImage(img, 0, 0);
+                    ctx.font = "30px Arial";
+                    ctx.fontStyler = 'Blue';
+                    ctx.fillText("Insert Image", 10, 100);
+                }
+                console.log(r);
+
+            }
+
+
+        }
+    </script>
+</body>
+
+</html>
